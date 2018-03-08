@@ -1,0 +1,13 @@
+galaxy_info:
+  author: Mark Dorison
+  description: Manages Drupal site deployments.
+  company: Chromatic
+  issue_tracker_url: https://github.com/ChromaticHQ/ansible-deploy-drupal/issues
+  license: MIT
+  min_ansible_version: 2.0
+  galaxy_tags:
+    - drupal
+    - devops
+    - deployment
+    - cms
+dependencies: []

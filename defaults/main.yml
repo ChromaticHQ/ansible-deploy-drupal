@@ -1,0 +1,28 @@
+---
+# The git repository url.
+deploydrupal_repo: ""
+
+# If set to false, git operations will be skipped. Useful if another tool has
+# already deployed the latest code.
+deploydrupal_code: true
+
+# The branch that should be deployed by git.
+deploydrupal_version: "master"
+
+# Will discard any local changes present in the git repository.
+deploydrupal_git_force: true
+
+# If set to false, composer install operations will be skipped even if
+# composer.json is present.
+deploydrupal_composer_install: true
+# Set to false to install composer dev dependencies.
+deploydrupal_composer_no_dev_dependencies: true
+
+# The path the repository should be cloned to.
+deploydrupal_dir: "/var/www/html"
+deploydrupal_core_path: "{{ deploydrupal_dir }}/web"
+deploydrupal_files_path: "{{ deploydrupal_core_path }}/sites/default/files"
+deploydrupal_drush_path: "{{ deploydrupal_dir }}/vendor/bin/drush"
+
+deploydrupal_checkout_user: "jenkins"
+deploydrupal_apache_user: "www-data"

@@ -1,0 +1,114 @@
+---
+- name: create files directory if it doesn't exist.
+  file:
+    path: "{{ deploydrupal_files_path }}"
+    state: directory
+    owner: "{{ deploydrupal_apache_user }}"
+    group: "{{ deploydrupal_checkout_user }}"
+    mode: 0770
+
+- name: open permissions on default directory.
+  file:
+    path: "{{ deploydrupal_core_path }}/sites/default"
+    state: directory
+    owner: "{{ deploydrupal_checkout_user }}"
+    group: "{{ deploydrupal_checkout_user }}"
+    mode: ug+w
+
+- name: open permissions on settings file.
+  file:
+    path: "{{ deploydrupal_core_path }}/sites/default/settings.php"
+    state: file
+    owner: "{{ deploydrupal_checkout_user }}"
+    group: "{{ deploydrupal_checkout_user }}"
+    mode: ug+w
+
+# This is not just failing, but breaking the git respository in testing.
+- name: get latest code.
+  git:
+    repo: "{{ deploydrupal_repo }}"
+    dest: "{{ deploydrupal_dir }}"
+    version: "{{ deploydrupal_version }}"
+    update: true
+    force: "{{ deploydrupal_git_force }}"
+    accept_hostkey: true
+  when: "deploydrupal_code"
+
+- name: check if a composer.json file is present.
+  stat: "path={{ deploydrupal_dir }}/composer.json"
+  register: deploydrupal_composer_file
+
+# –no-ansi, –no-interaction and –no-progress are always appended.
+- name: run composer install if composer.json is present.
+  composer:
+    command: install
+    working_dir: "{{ deploydrupal_dir }}"
+    no_dev: "{{ deploydrupal_composer_no_dev_dependencies }}"
+  register: composer_output
+  when:
+    - deploydrupal_composer_file.stat.exists == true
+    - deploydrupal_composer_install == true
+
+- name: print composer output
+  debug: var=composer_output.stdout_lines
+
+- name: close permissions on default directory.
+  file:
+    path: "{{ deploydrupal_core_path }}/sites/default"
+    state: directory
+    owner: "{{ deploydrupal_checkout_user }}"
+    group: "{{ deploydrupal_checkout_user }}"
+    mode: ug-w
+
+- name: close permissions on settings file.
+  file:
+    path: "{{ deploydrupal_core_path }}/sites/default/settings.php"
+    state: file
+    owner: "{{ deploydrupal_checkout_user }}"
+    group: "{{ deploydrupal_checkout_user }}"
+    mode: ug-w
+
+- name: update files directory owner and permissions.
+  file:
+    path: "{{ deploydrupal_files_path }}"
+    state: directory
+    owner: "{{ deploydrupal_apache_user }}"
+    group: "{{ deploydrupal_checkout_user }}"
+    mode: 0770
+
+- name: clear drush cache.
+  shell: "{{ deploydrupal_drush_path }} cache-clear drush"
+  args:
+    chdir: "{{ deploydrupal_core_path }}"
+
+- name: run database updates.
+  shell: "{{ deploydrupal_drush_path }} updb -y"
+  args:
+    chdir: "{{ deploydrupal_core_path }}"
+
+# Import the latest configuration. This includes the latest
+# configuration_split configuration. Importing this twice ensures that the
+# latter command enables and disables modules based upon the most up to date
+# configuration.
+- name: import configuration 1/2.
+  shell: "{{ deploydrupal_drush_path }} config-import -y"
+  args:
+    chdir: "{{ deploydrupal_core_path }}"
+  register: drush_output
+
+- name: print drush output
+  debug: var=drush_output.stdout_lines
+
+- name: import configuration 2/2.
+  shell: "{{ deploydrupal_drush_path }} config-import -y"
+  args:
+    chdir: "{{ deploydrupal_core_path }}"
+  register: drush_output
+
+- name: print drush output
+  debug: var=drush_output.stdout_lines
+
+- name: clear caches.
+  shell: "{{ deploydrupal_drush_path }} cr"
+  args:
+    chdir: "{{ deploydrupal_core_path }}"
