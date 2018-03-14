@@ -32,7 +32,7 @@
     force: "{{ deploydrupal_git_force }}"
     accept_hostkey: true
   when: "deploydrupal_code"
-  notify: clear opcache
+  # notify: clear opcache
 
 - name: check if a composer.json file is present.
   stat: "path={{ deploydrupal_dir }}/composer.json"
