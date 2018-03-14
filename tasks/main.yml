@@ -23,7 +23,6 @@
     group: "{{ deploydrupal_checkout_user }}"
     mode: ug+w
 
-# This is not just failing, but breaking the git respository in testing.
 - name: get latest code.
   git:
     repo: "{{ deploydrupal_repo }}"
