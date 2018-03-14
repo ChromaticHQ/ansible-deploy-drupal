@@ -33,6 +33,7 @@
     force: "{{ deploydrupal_git_force }}"
     accept_hostkey: true
   when: "deploydrupal_code"
+  notify: clear opcache
 
 - name: check if a composer.json file is present.
   stat: "path={{ deploydrupal_dir }}/composer.json"
@@ -82,7 +83,7 @@
     chdir: "{{ deploydrupal_core_path }}"
 
 - name: run database updates.
-  shell: "{{ deploydrupal_drush_path }} updb -y"
+  shell: "{{ deploydrupal_drush_path }} updatedb -y"
   args:
     chdir: "{{ deploydrupal_core_path }}"
 
@@ -109,6 +110,12 @@
   debug: var=drush_output.stdout_lines
 
 - name: clear caches.
-  shell: "{{ deploydrupal_drush_path }} cr"
+  shell: "{{ deploydrupal_drush_path }} cache-rebuild"
   args:
     chdir: "{{ deploydrupal_core_path }}"
+
+# Save redis data to disk. This is neccesary in Docker environments to ensure we
+# preserve the correct cache state.
+- name: redis save.
+  command: "redis-cli -h redis -n 0 SAVE"
+  when: "deploydrupal_redis_flush"

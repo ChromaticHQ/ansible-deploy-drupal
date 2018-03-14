@@ -26,3 +26,6 @@ deploydrupal_drush_path: "{{ deploydrupal_dir }}/vendor/bin/drush"
 
 deploydrupal_checkout_user: "jenkins"
 deploydrupal_apache_user: "www-data"
+
+# Enable to save redis data to disk at the end of deployment.
+deploydrupal_redis_flush: false
