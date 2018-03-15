@@ -29,3 +29,4 @@ deploydrupal_apache_user: "www-data"
 
 # Enable to save redis data to disk at the end of deployment.
 deploydrupal_redis_flush: false
+deploydrupal_redis_host: ""
