@@ -115,6 +115,6 @@
 
 # Save redis data to disk. This is neccesary in Docker environments to ensure we
 # preserve the correct cache state.
-- name: redis save.
-  command: "redis-cli -h redis -n 0 SAVE"
+- name: save redis data to disk.
+  command: "redis-cli -h {{ deploydrupal_redis_host }} -n 0 SAVE"
   when: "deploydrupal_redis_flush"
