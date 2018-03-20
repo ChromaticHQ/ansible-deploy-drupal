@@ -1,5 +1,5 @@
 ---
-- name: clear opcache.
+- name: clear opcache
   command: >
     {{ deploydrupal_drush_path }} eval
       "if (function_exists('apc_clear_cache')) {
