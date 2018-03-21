@@ -5,6 +5,10 @@ galaxy_info:
   issue_tracker_url: https://github.com/ChromaticHQ/ansible-deploy-drupal/issues
   license: MIT
   min_ansible_version: 2.0
+  platforms:
+    - name: Ubuntu
+      versions:
+        - xenial
   galaxy_tags:
     - drupal
     - devops
