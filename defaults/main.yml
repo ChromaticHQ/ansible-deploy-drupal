@@ -30,3 +30,8 @@ deploydrupal_apache_user: "www-data"
 # Enable to save redis data to disk at the end of deployment.
 deploydrupal_redis_flush: false
 deploydrupal_redis_host: ""
+
+# Build theme with npm commands.
+deploydrupal_npm_theme_build: false
+deploydrupal_npm_theme_path: ""
+deploydrupal_npm_theme_run_commands: []

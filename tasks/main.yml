@@ -108,6 +108,15 @@
 - name: print drush output
   debug: var=drush_output.stdout_lines
 
+- name: run npm theme build tasks.
+  shell: "{{ item }}"
+  args:
+    chdir: "{{ deploydrupal_npm_theme_path }}"
+  with_items: "{{ deploydrupal_npm_theme_run_commands }}"
+  when:
+    - deploydrupal_npm_theme_build
+    - deploydrupal_npm_theme_path is defined
+
 - name: clear caches.
   shell: "{{ deploydrupal_drush_path }} cache-rebuild"
   args:
