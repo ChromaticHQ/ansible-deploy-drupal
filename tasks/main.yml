@@ -81,12 +81,12 @@
 - name: clear drush cache.
   shell: "{{ deploydrupal_drush_path }} cache-clear drush"
   args:
-    chdir: "{{ deploydrupal_core_path }}"
+    chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
 
 - name: run database updates.
   shell: "{{ deploydrupal_drush_path }} updatedb -y"
   args:
-    chdir: "{{ deploydrupal_core_path }}"
+    chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
 
 # Import the latest configuration. This includes the latest
 # configuration_split configuration. Importing this twice ensures that the
@@ -95,7 +95,7 @@
 - name: import configuration 1/2.
   shell: "{{ deploydrupal_drush_path }} config-import -y"
   args:
-    chdir: "{{ deploydrupal_core_path }}"
+    chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
   register: drush_output
 
 - name: print drush output
@@ -104,7 +104,7 @@
 - name: import configuration 2/2.
   shell: "{{ deploydrupal_drush_path }} config-import -y"
   args:
-    chdir: "{{ deploydrupal_core_path }}"
+    chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
   register: drush_output
 
 - name: print drush output
@@ -122,7 +122,7 @@
 - name: clear caches.
   shell: "{{ deploydrupal_drush_path }} cache-rebuild"
   args:
-    chdir: "{{ deploydrupal_core_path }}"
+    chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
 
 # Save redis data to disk. This is neccesary in Docker environments to ensure we
 # preserve the correct cache state.
