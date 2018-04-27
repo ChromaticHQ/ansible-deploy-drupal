@@ -6,6 +6,7 @@
     owner: "{{ deploydrupal_apache_user }}"
     group: "{{ deploydrupal_checkout_user }}"
     mode: 0770
+  become: "{{ deploydrupal_files_become }}"
 
 - name: open permissions on default directory.
   file:
@@ -75,6 +76,7 @@
     owner: "{{ deploydrupal_apache_user }}"
     group: "{{ deploydrupal_checkout_user }}"
     mode: 0770
+  become: "{{ deploydrupal_files_become }}"
 
 - name: clear drush cache.
   shell: "{{ deploydrupal_drush_path }} cache-clear drush"
