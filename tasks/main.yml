@@ -1,7 +1,7 @@
 ---
 - name: create files directory if it doesn't exist.
   file:
-    path: "{{ deploydrupal_files_path }}"
+    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/files"
     state: directory
     owner: "{{ deploydrupal_apache_user }}"
     group: "{{ deploydrupal_checkout_user }}"
@@ -10,7 +10,7 @@
 
 - name: open permissions on default directory.
   file:
-    path: "{{ deploydrupal_core_path }}/sites/default"
+    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
     state: directory
     owner: "{{ deploydrupal_checkout_user }}"
     group: "{{ deploydrupal_checkout_user }}"
@@ -18,7 +18,7 @@
 
 - name: open permissions on settings file.
   file:
-    path: "{{ deploydrupal_core_path }}/sites/default/settings.php"
+    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/settings.php"
     state: file
     owner: "{{ deploydrupal_checkout_user }}"
     group: "{{ deploydrupal_checkout_user }}"
@@ -55,7 +55,7 @@
 
 - name: close permissions on default directory.
   file:
-    path: "{{ deploydrupal_core_path }}/sites/default"
+    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
     state: directory
     owner: "{{ deploydrupal_checkout_user }}"
     group: "{{ deploydrupal_checkout_user }}"
@@ -63,7 +63,7 @@
 
 - name: close permissions on settings file.
   file:
-    path: "{{ deploydrupal_core_path }}/sites/default/settings.php"
+    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/settings.php"
     state: file
     owner: "{{ deploydrupal_checkout_user }}"
     group: "{{ deploydrupal_checkout_user }}"
@@ -71,7 +71,7 @@
 
 - name: update files directory owner and permissions.
   file:
-    path: "{{ deploydrupal_files_path }}"
+    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/files"
     state: directory
     owner: "{{ deploydrupal_apache_user }}"
     group: "{{ deploydrupal_checkout_user }}"

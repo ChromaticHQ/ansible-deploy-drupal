@@ -6,7 +6,7 @@ deploydrupal_repo: ""
 # already deployed the latest code.
 deploydrupal_code: true
 
-# The branch that should be deployed by git.
+# The branch to be deployed by git.
 deploydrupal_version: "master"
 
 # Will discard any local changes present in the git repository.
@@ -21,6 +21,9 @@ deploydrupal_composer_no_dev_dependencies: true
 # The path the repository should be cloned to.
 deploydrupal_dir: "/var/www/html"
 deploydrupal_core_path: "{{ deploydrupal_dir }}/web"
+# The site name used by Drupal to look up settings and files on the file system.
+# ex. the "default" in `sites/default/files`.
+deploydrupal_site_name: "default"
 deploydrupal_files_become: false
 deploydrupal_files_path: "{{ deploydrupal_core_path }}/sites/default/files"
 deploydrupal_drush_path: "{{ deploydrupal_dir }}/vendor/bin/drush"
