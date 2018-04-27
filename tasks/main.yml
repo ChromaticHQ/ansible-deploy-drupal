@@ -1,15 +1,16 @@
 ---
 - name: create files directory if it doesn't exist.
   file:
-    path: "{{ deploydrupal_files_path }}"
+    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/files"
     state: directory
     owner: "{{ deploydrupal_apache_user }}"
     group: "{{ deploydrupal_checkout_user }}"
     mode: 0770
+  become: "{{ deploydrupal_files_become }}"
 
 - name: open permissions on default directory.
   file:
-    path: "{{ deploydrupal_core_path }}/sites/default"
+    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
     state: directory
     owner: "{{ deploydrupal_checkout_user }}"
     group: "{{ deploydrupal_checkout_user }}"
@@ -17,7 +18,7 @@
 
 - name: open permissions on settings file.
   file:
-    path: "{{ deploydrupal_core_path }}/sites/default/settings.php"
+    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/settings.php"
     state: file
     owner: "{{ deploydrupal_checkout_user }}"
     group: "{{ deploydrupal_checkout_user }}"
@@ -54,7 +55,7 @@
 
 - name: close permissions on default directory.
   file:
-    path: "{{ deploydrupal_core_path }}/sites/default"
+    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
     state: directory
     owner: "{{ deploydrupal_checkout_user }}"
     group: "{{ deploydrupal_checkout_user }}"
@@ -62,7 +63,7 @@
 
 - name: close permissions on settings file.
   file:
-    path: "{{ deploydrupal_core_path }}/sites/default/settings.php"
+    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/settings.php"
     state: file
     owner: "{{ deploydrupal_checkout_user }}"
     group: "{{ deploydrupal_checkout_user }}"
@@ -70,21 +71,22 @@
 
 - name: update files directory owner and permissions.
   file:
-    path: "{{ deploydrupal_files_path }}"
+    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/files"
     state: directory
     owner: "{{ deploydrupal_apache_user }}"
     group: "{{ deploydrupal_checkout_user }}"
     mode: 0770
+  become: "{{ deploydrupal_files_become }}"
 
 - name: clear drush cache.
   shell: "{{ deploydrupal_drush_path }} cache-clear drush"
   args:
-    chdir: "{{ deploydrupal_core_path }}"
+    chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
 
 - name: run database updates.
   shell: "{{ deploydrupal_drush_path }} updatedb -y"
   args:
-    chdir: "{{ deploydrupal_core_path }}"
+    chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
 
 # Import the latest configuration. This includes the latest
 # configuration_split configuration. Importing this twice ensures that the
@@ -93,7 +95,7 @@
 - name: import configuration 1/2.
   shell: "{{ deploydrupal_drush_path }} config-import -y"
   args:
-    chdir: "{{ deploydrupal_core_path }}"
+    chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
   register: drush_output
 
 - name: print drush output
@@ -102,7 +104,7 @@
 - name: import configuration 2/2.
   shell: "{{ deploydrupal_drush_path }} config-import -y"
   args:
-    chdir: "{{ deploydrupal_core_path }}"
+    chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
   register: drush_output
 
 - name: print drush output
@@ -120,7 +122,7 @@
 - name: clear caches.
   shell: "{{ deploydrupal_drush_path }} cache-rebuild"
   args:
-    chdir: "{{ deploydrupal_core_path }}"
+    chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
 
 # Save redis data to disk. This is neccesary in Docker environments to ensure we
 # preserve the correct cache state.
