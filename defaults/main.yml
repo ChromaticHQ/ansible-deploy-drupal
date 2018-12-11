@@ -18,6 +18,17 @@ deploydrupal_composer_install: true
 # Set to false to install composer dev dependencies.
 deploydrupal_composer_no_dev_dependencies: true
 
+# If set to true, drush site-install will be run during deployment.
+# This is sometimesuseful during site development.
+deploydrupal_site_install: false
+# If set to true, drush site-install will use the config directory specified in
+# settings.php as the install "profile". This setting is only used when
+# deploydrupal_site_install is true.
+deploydrupal_site_install_config: true
+
+# If set to false, drush config-import will not be run as part of deployment.
+deploydrupal_config_import: false
+
 # The path the repository should be cloned to.
 deploydrupal_dir: "/var/www/html"
 deploydrupal_core_path: "{{ deploydrupal_dir }}/web"
