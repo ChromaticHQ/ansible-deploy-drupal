@@ -94,14 +94,8 @@
     chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
 
 # site-install.
-- name: check if site-install config option is enabled.
-  set_fact:
-    deploydrupal_site_install_config_option: "{{ deploydrupal_site_install_config | ternary('--existing-config', '') }}"
-  when:
-    - deploydrupal_site_install
-
 - name: install site.
-  shell: "{{ deploydrupal_drush_path }} site-install {{ deploydrupal_site_install_config_option }} --verbose --yes"
+  shell: "{{ deploydrupal_drush_path }} site-install {{ deploydrupal_site_install_config | ternary('--existing-config', '') }} --verbose --yes"
   args:
     chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
   when:
