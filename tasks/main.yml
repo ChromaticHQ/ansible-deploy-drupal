@@ -96,7 +96,7 @@
 # site-install.
 - name: check if site-install config option is enabled.
   set_fact:
-    deploydrupal_site_install_config_option: "{{ '--existing-config' if deploydrupal_site_install_config == true else '' }}"
+    deploydrupal_site_install_config_option: "{{ deploydrupal_site_install_config | ternary('--existing-config', '') }}"
   when:
     - deploydrupal_site_install
 
