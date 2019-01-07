@@ -27,7 +27,7 @@ deploydrupal_site_install: false
 deploydrupal_site_install_config: true
 
 # If set to false, drush config-import will not be run as part of deployment.
-deploydrupal_config_import: false
+deploydrupal_config_import: true
 
 # The path the repository should be cloned to.
 deploydrupal_dir: "/var/www/html"
