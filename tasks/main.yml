@@ -133,6 +133,17 @@
 - name: print drush output
   debug: var=drush_output.stdout_lines
 
+- name: run entity updates.
+  shell: "{{ deploydrupal_drush_path}} entity-updates --yes"
+  args:
+    chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
+  register: drush_output
+  when:
+  - deploydrupal_entity_updates
+
+- name: print drush output
+  debug: var=drush_output.stdout_lines
+
 - name: run npm theme build tasks.
   shell: "{{ item }}"
   args:
