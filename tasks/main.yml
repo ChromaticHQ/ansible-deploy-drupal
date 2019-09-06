@@ -147,7 +147,7 @@
   args:
     chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
 
-# Save redis data to disk. This is neccesary in Docker environments to ensure we
+# Save redis data to disk. This is necessary in Docker environments to ensure we
 # preserve the correct cache state.
 - name: save redis data to disk.
   command: "redis-cli -h {{ deploydrupal_redis_host }} -n 0 SAVE"
