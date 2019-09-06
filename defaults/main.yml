@@ -50,3 +50,6 @@ deploydrupal_redis_host: ""
 deploydrupal_npm_theme_build: false
 deploydrupal_npm_theme_path: ""
 deploydrupal_npm_theme_run_commands: []
+
+# Rebuild Drupal cache.
+deploydrupal_drush_cache_rebuild: true
