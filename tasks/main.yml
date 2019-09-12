@@ -133,7 +133,7 @@
   when:
     - not deploydrupal_site_install
 
-- name: run npm theme build tasks.
+- name: run theme build tasks.
   shell: "{{ item }}"
   args:
     chdir: "{{ deploydrupal_npm_theme_path }}"
