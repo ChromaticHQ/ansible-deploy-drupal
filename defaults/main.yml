@@ -36,7 +36,7 @@ deploydrupal_core_path: "{{ deploydrupal_dir }}/web"
 # ex. the "default" in `sites/default/files`.
 deploydrupal_site_name: "default"
 deploydrupal_files_become: false
-deploydrupal_files_path: "{{ deploydrupal_core_path }}/sites/default/files"
+deploydrupal_files_path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/files"
 deploydrupal_drush_path: "{{ deploydrupal_dir }}/vendor/bin/drush"
 
 deploydrupal_checkout_user: "jenkins"
