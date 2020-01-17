@@ -107,6 +107,8 @@
     mode: 0770
   become: "{{ deploydrupal_files_become }}"
   with_items: "{{ deploydrupal_file_permission_fix_directories }}"
+  when:
+    - deploydrupal_site_install
 
 # Import the latest configuration. This includes the latest
 # configuration_split configuration. Importing this twice ensures that the
