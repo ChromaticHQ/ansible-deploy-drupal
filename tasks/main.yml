@@ -69,15 +69,6 @@
     group: "{{ deploydrupal_checkout_user }}"
     mode: ug-w
 
-- name: update files directory owner and permissions.
-  file:
-    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/files"
-    state: directory
-    owner: "{{ deploydrupal_apache_user }}"
-    group: "{{ deploydrupal_checkout_user }}"
-    mode: 0770
-  become: "{{ deploydrupal_files_become }}"
-
 - name: clear drush cache.
   shell: "{{ deploydrupal_drush_path }} cache-clear drush"
   args:
@@ -105,9 +96,8 @@
     owner: "{{ deploydrupal_apache_user }}"
     group: "{{ deploydrupal_checkout_user }}"
     mode: 0770
-    recurse: yes
+    recurse: "{{ deploydrupal_site_install }}"
   become: "{{ deploydrupal_files_become }}"
-  when: deploydrupal_site_install_config
 
 # Import the latest configuration. This includes the latest
 # configuration_split configuration. Importing this twice ensures that the
