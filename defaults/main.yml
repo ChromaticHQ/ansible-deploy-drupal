@@ -53,3 +53,8 @@ deploydrupal_npm_theme_run_commands: []
 
 # Rebuild Drupal cache.
 deploydrupal_drush_cache_rebuild: true
+
+# Site file directory folders that need permission fixes after site install.
+deploydrupal_file_permission_fix_directories:
+  - 'styles'
+  - 'media-icons'
