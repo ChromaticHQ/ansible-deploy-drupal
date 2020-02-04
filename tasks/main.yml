@@ -45,6 +45,7 @@
     command: install
     working_dir: "{{ deploydrupal_dir }}"
     no_dev: "{{ deploydrupal_composer_no_dev_dependencies }}"
+    optimize_autoloader: true
   register: composer_output
   when:
     - deploydrupal_composer_file.stat.exists == true
