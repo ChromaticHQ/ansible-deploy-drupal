@@ -17,6 +17,9 @@ deploydrupal_git_force: true
 deploydrupal_composer_install: true
 # Set to false to install composer dev dependencies.
 deploydrupal_composer_no_dev_dependencies: true
+# Enable composer autoload optimization.
+# https://getcomposer.org/doc/articles/autoloader-optimization.md#autoloader-optimization
+deploydrupal_composer_optimize_autoloader: false
 
 # If set to true, drush site-install will be run during deployment.
 # This is sometimesuseful during site development.
