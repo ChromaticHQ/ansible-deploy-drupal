@@ -41,6 +41,7 @@ deploydrupal_site_name: "default"
 deploydrupal_files_become: false
 deploydrupal_files_path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/files"
 deploydrupal_drush_path: "{{ deploydrupal_dir }}/vendor/bin/drush"
+deploydrupal_drupal_path: "{{ deploydrupal_dir }}/vendor/bin/drupal"
 
 deploydrupal_checkout_user: "jenkins"
 deploydrupal_apache_user: "www-data"
