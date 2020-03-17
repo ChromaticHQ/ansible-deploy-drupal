@@ -117,6 +117,7 @@
     chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
   when:
     - not deploydrupal_site_install
+    - deploydrupal_database_update_before_config_import
 
 # Import the latest configuration. This includes the latest
 # configuration_split configuration. Importing this twice ensures that the
@@ -142,6 +143,14 @@
   register: drush_output
   when:
     - deploydrupal_config_import
+
+- name: run database updates.
+  shell: "{{ deploydrupal_drush_path }} updatedb -y"
+  args:
+    chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
+  when:
+    - not deploydrupal_site_install
+    - not deploydrupal_database_update_before_config_import
 
 - name: print drush output
   debug: var=drush_output.stdout_lines
