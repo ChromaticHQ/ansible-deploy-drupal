@@ -144,6 +144,9 @@
   when:
     - deploydrupal_config_import
 
+- name: print drush output
+  debug: var=drush_output.stdout_lines
+
 - name: run database updates.
   shell: "{{ deploydrupal_drush_path }} updatedb -y"
   args:
@@ -151,9 +154,6 @@
   when:
     - not deploydrupal_site_install
     - not deploydrupal_database_update_before_config_import
-
-- name: print drush output
-  debug: var=drush_output.stdout_lines
 
 - name: run theme build tasks.
   shell: "{{ item }}"
