@@ -117,6 +117,13 @@
   when:
     - deploydrupal_site_install
 
+- name: run database updates.
+  shell: "{{ deploydrupal_drush_path }} updatedb -y"
+  args:
+    chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
+  when:
+    - not deploydrupal_site_install
+
 # Import the latest configuration. This includes the latest
 # configuration_split configuration. Importing this twice ensures that the
 # latter command enables and disables modules based upon the most up to date
