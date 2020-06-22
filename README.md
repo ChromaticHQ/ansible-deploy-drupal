@@ -1,18 +1,22 @@
 # Ansible Role: deploy-drupal
+
 Manages Drupal site deployments.
 
 ## Requirements
+
 None.
 
 ## Role Variables
+
 See [defaults](defaults/main.yml) for all available variables and accompanying
 documentation.
 
 ## Example Playbook
+
 Including an example of how to use your role (for instance, with variables
 passed in as parameters) is always nice for users too:
 
-```
+```yaml
     - hosts: all
 
       vars:
@@ -29,4 +33,5 @@ passed in as parameters) is always nice for users too:
 ```
 
 ## License
+
 MIT
