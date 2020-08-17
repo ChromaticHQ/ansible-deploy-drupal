@@ -79,6 +79,15 @@
     mode: 0770
   become: "{{ deploydrupal_files_become }}"
 
+- name: run theme build tasks.
+  shell: "{{ item }}"
+  args:
+    chdir: "{{ deploydrupal_npm_theme_path }}"
+  with_items: "{{ deploydrupal_npm_theme_run_commands }}"
+  when:
+    - deploydrupal_npm_theme_build
+    - deploydrupal_npm_theme_path is defined
+
 # Drush ^9 uses the Drupal service container. We intentionally clear the Drupal
 # cache before the Drush cache to avoid fatal errors due to stale cache in the
 # service container.
@@ -121,15 +130,6 @@
   debug: var=drush_output.stdout_lines
   when:
     - deploydrupal_drush_deploy
-
-- name: run theme build tasks.
-  shell: "{{ item }}"
-  args:
-    chdir: "{{ deploydrupal_npm_theme_path }}"
-  with_items: "{{ deploydrupal_npm_theme_run_commands }}"
-  when:
-    - deploydrupal_npm_theme_build
-    - deploydrupal_npm_theme_path is defined
 
 # Save redis data to disk. This is necessary in Docker environments to ensure we
 # preserve the correct cache state.
