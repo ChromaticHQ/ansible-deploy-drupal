@@ -29,8 +29,8 @@ deploydrupal_site_install: false
 # deploydrupal_site_install is true.
 deploydrupal_site_install_config: true
 
-# If set to false, drush config-import will not be run as part of deployment.
-deploydrupal_config_import: true
+# If set to false, drush deploy will not be run as part of deployment.
+deploydrupal_drush_deploy: true
 
 # The path the repository should be cloned to.
 deploydrupal_dir: "/var/www/html"
@@ -54,7 +54,7 @@ deploydrupal_npm_theme_build: false
 deploydrupal_npm_theme_path: ""
 deploydrupal_npm_theme_run_commands: []
 
-# Rebuild Drupal cache.
+# Rebuild Drush cache.
 deploydrupal_drush_cache_rebuild: true
 
 # Site file directory folders that need permission fixes after site install.
