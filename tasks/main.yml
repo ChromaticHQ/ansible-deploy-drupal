@@ -91,6 +91,13 @@
 # Drush ^9 uses the Drupal service container. We intentionally clear the Drupal
 # cache before the Drush cache to avoid fatal errors due to stale cache in the
 # service container.
+- name: clear caches.
+  shell: "{{ deploydrupal_drush_path }} cache-rebuild"
+  args:
+    chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
+  when:
+    - deploydrupal_drush_cache_rebuild
+
 - name: clear drush cache.
   shell: "{{ deploydrupal_drush_path }} cache-clear drush"
   args:
