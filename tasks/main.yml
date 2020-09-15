@@ -137,7 +137,7 @@
 # works because the exit code for grep is non-zero when the supplied search
 # string is not found.
 - name: config structure check
-  shell: "{{ deploydrupal_drush_path }} config:export -y | grep 'identical'"
+  shell: "{{ deploydrupal_drush_path }} config:export -y | grep {{ deploydrupal_config_check_structure_string }}"
   args:
     chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
   when:
