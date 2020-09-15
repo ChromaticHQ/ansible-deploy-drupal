@@ -128,10 +128,15 @@
 # Config Value Check - This is primarily to catch configuration value updates
 # done via update hooks from Dependabot PR's. This is to replace the dev process
 # that would be done in a local environment.
+- name: config value check update
+  shell: "{{ deploydrupal_drush_path }} updatedb -y"
+  args:
+    chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
+  when:
+    - deploydrupal_config_check_value
+
 - name: config value check
-  shell: |
-    "{{ deploydrupal_drush_path }} updatedb -y"
-    "{{ deploydrupal_drush_path }} config:export -y | grep 'identical'"
+  shell: "{{ deploydrupal_drush_path }} config:export -y | grep 'identical'"
   args:
     chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
   when:
