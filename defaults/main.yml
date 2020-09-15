@@ -61,3 +61,7 @@ deploydrupal_drush_cache_rebuild: true
 deploydrupal_file_permission_fix_directories:
   - 'styles'
   - 'media-icons'
+
+# Config check. Useful for validating config in pre-production environments.
+deploydrupal_config_check_structure: false
+deploydrupal_config_check_value: false

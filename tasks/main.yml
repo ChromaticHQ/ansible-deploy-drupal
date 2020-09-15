@@ -125,12 +125,33 @@
   when:
     - deploydrupal_site_install
 
+# Config Value Check - This is primarily to catch configuration value updates
+# done via update hooks from Dependabot PR's. This is to replace the dev process
+# that would be done in a local environment.
+- name: config value check
+  shell: |
+    "{{ deploydrupal_drush_path }} updatedb -y"
+    "{{ deploydrupal_drush_path }} config-export | grep 'identical'"
+  args:
+    chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
+  when:
+    - deploydrupal_config_check_value
+
 - name: drush deploy
   shell: "{{ deploydrupal_drush_path }} deploy -v -y"
   args:
     chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
   when:
     - deploydrupal_drush_deploy
+
+# Config Structure Check - This is primarily to catch configuration structure
+# changes from updating modules with Dependabot or missed configuration.
+- name: config structure check
+  shell: "{{ deploydrupal_drush_path }} config-export -y | grep 'identical'"
+  args:
+    chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
+  when:
+    - deploydrupal_config_check_structure
 
 # Save redis data to disk. This is necessary in Docker environments to ensure we
 # preserve the correct cache state.
