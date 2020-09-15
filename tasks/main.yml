@@ -133,7 +133,9 @@
     - deploydrupal_drush_deploy
 
 # Config Structure Check - This is primarily to catch configuration structure
-# changes from updating modules with Dependabot or missed configuration.
+# changes from updating modules with Dependabot or missed configuration. This
+# works because the exit code for grep is non-zero when the supplied search
+# string is not found.
 - name: config structure check
   shell: "{{ deploydrupal_drush_path }} config:export -y | grep 'identical'"
   args:
