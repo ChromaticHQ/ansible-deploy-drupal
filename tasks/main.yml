@@ -142,6 +142,8 @@
     chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
   when:
     - deploydrupal_config_check_structure
+  fail:
+    msg: The tracked does not match the exported active config.
 
 # Save redis data to disk. This is necessary in Docker environments to ensure we
 # preserve the correct cache state.
