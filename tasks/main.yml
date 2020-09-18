@@ -137,11 +137,15 @@
 # works because the exit code for grep is non-zero when the supplied search
 # string is not found.
 - name: config structure check
-  shell: "{{ deploydrupal_drush_path }} config:export -y 3>&1 1>&2 2>&3 | grep '{{ deploydrupal_config_check_structure_string }}'"
+  shell: "{{ deploydrupal_drush_path }} config:export -y"
   args:
     chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
+  register: deploydrupal_config_check_result
   when:
     - deploydrupal_config_check_structure
+  failed_when: >
+    deploydrupal_config_check_structure_string in deploydrupal_config_check_result.stdout
+    or deploydrupal_config_check_structure_string in deploydrupal_config_check_result.stderr
 
 # Save redis data to disk. This is necessary in Docker environments to ensure we
 # preserve the correct cache state.
