@@ -143,9 +143,7 @@
   register: deploydrupal_config_check_result
   when:
     - deploydrupal_config_check_structure
-  failed_when: >
-    deploydrupal_config_check_structure_string not in deploydrupal_config_check_result.stdout
-    or deploydrupal_config_check_structure_string not in deploydrupal_config_check_result.stderr
+  failed_when: "{{ deploydrupal_config_check_structure_string }} not in deploydrupal_config_check_result.stderr"
 
 # Save redis data to disk. This is necessary in Docker environments to ensure we
 # preserve the correct cache state.
