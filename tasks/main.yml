@@ -18,11 +18,13 @@
 
 - name: open permissions on settings file.
   file:
-    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/settings.php"
+    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/"
     state: file
     owner: "{{ deploydrupal_checkout_user }}"
     group: "{{ deploydrupal_checkout_user }}"
     mode: ug+w
+  with_fileglob:
+    - "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/{{ deploydrupal_settings_file_pattern }}"
 
 - name: get latest code.
   git:
@@ -64,11 +66,13 @@
 
 - name: close permissions on settings file.
   file:
-    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/settings.php"
+    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/"
     state: file
     owner: "{{ deploydrupal_checkout_user }}"
     group: "{{ deploydrupal_checkout_user }}"
     mode: ug-w
+  with_fileglob:
+    - "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/{{ deploydrupal_settings_file_pattern }}"
 
 - name: update files directory owner and permissions.
   file:
