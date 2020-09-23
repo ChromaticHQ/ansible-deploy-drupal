@@ -26,12 +26,12 @@
 
 - name: open permissions on settings files.
   file:
-    path: "{{ settings_file }}"
+    path: "{{ settings_file.path }}"
     state: file
     owner: "{{ deploydrupal_checkout_user }}"
     group: "{{ deploydrupal_checkout_user }}"
     mode: ug+w
-  loop: "{{ deploydrupal_settings_files }}"
+  loop: "{{ deploydrupal_settings_files.files }}"
   loop_control:
     loop_var: settings_file
 
@@ -75,12 +75,12 @@
 
 - name: close permissions on settings files.
   file:
-    path: "{{ settings_file }}"
+    path: "{{ settings_file.path }}"
     state: file
     owner: "{{ deploydrupal_checkout_user }}"
     group: "{{ deploydrupal_checkout_user }}"
     mode: ug-w
-  loop: "{{ deploydrupal_settings_files }}"
+  loop: "{{ deploydrupal_settings_files.files }}"
   loop_control:
     loop_var: settings_file
 
