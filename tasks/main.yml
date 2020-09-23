@@ -16,7 +16,7 @@
     group: "{{ deploydrupal_checkout_user }}"
     mode: ug+w
 
-- name: discover settings files.
+- name: discover settings files in all /sites directories.
   find:
     paths: "{{ deploydrupal_core_path }}/sites"
     patterns: "{{ deploydrupal_settings_file_pattern }}"
