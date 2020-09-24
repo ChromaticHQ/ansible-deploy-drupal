@@ -16,13 +16,24 @@
     group: "{{ deploydrupal_checkout_user }}"
     mode: ug+w
 
-- name: open permissions on settings file.
+- name: discover settings files in all /sites directories.
+  find:
+    paths: "{{ deploydrupal_core_path }}/sites"
+    patterns: "{{ deploydrupal_settings_file_pattern }}"
+    depth: 2
+    recurse: true
+  register: deploydrupal_settings_files
+
+- name: open permissions on settings files.
   file:
-    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/settings.php"
+    path: "{{ settings_file.path }}"
     state: file
     owner: "{{ deploydrupal_checkout_user }}"
     group: "{{ deploydrupal_checkout_user }}"
     mode: ug+w
+  loop: "{{ deploydrupal_settings_files.files }}"
+  loop_control:
+    loop_var: settings_file
 
 - name: get latest code.
   git:
@@ -62,13 +73,16 @@
     group: "{{ deploydrupal_checkout_user }}"
     mode: ug-w
 
-- name: close permissions on settings file.
+- name: close permissions on settings files.
   file:
-    path: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}/settings.php"
+    path: "{{ settings_file.path }}"
     state: file
     owner: "{{ deploydrupal_checkout_user }}"
     group: "{{ deploydrupal_checkout_user }}"
     mode: ug-w
+  loop: "{{ deploydrupal_settings_files.files }}"
+  loop_control:
+    loop_var: settings_file
 
 - name: update files directory owner and permissions.
   file:

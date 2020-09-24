@@ -65,3 +65,6 @@ deploydrupal_file_permission_fix_directories:
 # Config check. Useful for validating config in pre-production environments.
 deploydrupal_config_check_structure: false
 deploydrupal_config_check_structure_string: "active configuration is identical"
+
+# The pattern used to match settings files that need permissions changed.
+deploydrupal_settings_file_pattern: "settings*.php"
