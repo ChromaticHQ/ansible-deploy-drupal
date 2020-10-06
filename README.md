@@ -1,4 +1,4 @@
-# Ansible Role: deploy-drupal
+# Ansible Role: ansible-deploy-drupal
 
 Manages Drupal site deployments.
 
