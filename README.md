@@ -29,7 +29,7 @@ passed in as parameters) is always nice for users too:
         deploydrupal_code: true
 
       roles:
-        - chromatichq.deploy-drupal
+        - ansible-deploy-drupal
 ```
 
 ## License
