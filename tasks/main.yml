@@ -146,6 +146,17 @@
   when:
     - deploydrupal_drush_deploy
 
+# Import the latest configuration again. This includes the latest
+# configuration_split configuration. Importing this twice ensures that the
+# latter command enables and disables modules based upon the most up to date
+# configuration.
+- name: drush config import
+  shell: "{{ deploydrupal_drush_path }} config:import -y"
+  args:
+    chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
+  when:
+    - deploydrupal_drush_deploy
+
 # Identify Drupal configuration changes in core or contrib updates that need
 # to be exported and may have been missed.
 - name: config structure check
