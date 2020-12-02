@@ -149,7 +149,8 @@
 # Import the latest configuration again. This includes the latest
 # configuration_split configuration. Importing this twice ensures that the
 # latter command enables and disables modules based upon the most up to date
-# configuration.
+# configuration. Additional information and discussion can be found here:
+# https://github.com/drush-ops/drush/issues/2449#issuecomment-708655673
 - name: drush config import
   shell: "{{ deploydrupal_drush_path }} config:import -y"
   args:
