@@ -73,6 +73,14 @@
     group: "{{ deploydrupal_checkout_user }}"
     mode: ug-w
 
+- name: rediscover settings files in all /sites directories in case of settings file changes.
+  find:
+    paths: "{{ deploydrupal_core_path }}/sites"
+    patterns: "{{ deploydrupal_settings_file_pattern }}"
+    depth: 2
+    recurse: true
+  register: deploydrupal_settings_files
+
 - name: close permissions on settings files.
   file:
     path: "{{ settings_file.path }}"
