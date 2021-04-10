@@ -126,6 +126,7 @@
     chdir: "{{ deploydrupal_core_path }}/sites/{{ deploydrupal_site_name }}"
   when:
     - deploydrupal_drush_cache_rebuild
+  ignore_errors: true
 
 # site-install.
 - name: install site.
